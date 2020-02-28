@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as SerialPort from 'serialport';
+import * as Readline from '@serialport/parser-readline'
 
 @Component({
   selector: 'app-serial-test',
@@ -9,11 +10,18 @@ import * as SerialPort from 'serialport';
 export class SerialTestComponent implements OnInit {
   serialport: SerialPort = window['require']('serialport');
 
+  port = new SerialPort('COM1', {
+    baudRate: 9600
+  });
+
   constructor() { }
 
   ngOnInit() {
     console.log(this.serialport);
     this.getSerialPorts();
+
+    const parser = this.port.pipe(new Readline({ delimiter: '\r\n' }))
+    parser.on('data', console.log)
   }
 
   getSerialPorts() {
