@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require("electron");
-// const serialport = require("serialport");
+const serialport = require("serialport");
 const url = require("url");
 const path = require("path");
 
